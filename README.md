@@ -159,7 +159,7 @@ r2-local-fs watch \
 
 ## Implementation Language
 
-This project can be written in Python.
+This project is written in Python.
 
 Python is a good fit because the main jobs are:
 
@@ -178,13 +178,14 @@ pipx install r2-local-fs
 or run from a checkout during development:
 
 ```sh
-uv run r2-local-fs watch \
+PYTHONPATH=src python -m r2_local_fs watch \
   --endpoint http://localhost:8787 \
   --bucket wk-prod \
   --dir ~/R2/wk-prod
 ```
 
-Recommended Python libraries:
+The current implementation uses only the Python standard library. Future
+versions may add:
 
 - `httpx` for Local Explorer API calls
 - `watchfiles` or `watchdog` for filesystem events
@@ -194,8 +195,7 @@ Recommended Python libraries:
 - `fastapi` or `starlette` only if the S3-compatible endpoint needs an HTTP
   framework
 
-The first version should keep dependencies modest. The core sync loop does not
-need a web framework.
+The core sync loop does not need a web framework.
 
 ## Sync Behavior
 
@@ -347,11 +347,24 @@ versions and report the conflict instead of silently overwriting data.
 
 ## Status
 
-This repository is currently a design stub for the local R2 filesystem facade.
-The recommended first Python implementation is:
+This repository now contains the first Python implementation of the local R2
+filesystem facade.
+
+Implemented:
 
 1. Local Explorer API client.
-2. One-way `pull` from local R2 to a normal folder.
-3. One-way `push` from a normal folder to local R2.
-4. Continuous `watch` with reconciliation.
-5. Optional S3-compatible AWS CLI shim.
+2. Bucket discovery.
+3. `init` config generation.
+4. One-way `pull` from local R2 to a normal folder.
+5. One-way `push` from a normal folder to local R2.
+6. Continuous `watch`/`on` reconciliation.
+7. Direct remote delete when a locally mirrored file is deleted.
+8. Stable-file detection before upload.
+9. Manifest-based drift detection.
+
+Not implemented yet:
+
+1. Native filesystem event acceleration.
+2. Bounded concurrent upload/download workers.
+3. S3-compatible AWS CLI shim.
+4. Packaged release on PyPI.

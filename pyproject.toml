@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "r2-local-fs"
+version = "0.1.0"
+description = "Filesystem facade for Wrangler local R2 buckets"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [
+  { name = "r2-local-fs contributors" }
+]
+keywords = ["cloudflare", "wrangler", "r2", "miniflare", "filesystem"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
+dependencies = []
+
+[project.scripts]
+r2-local-fs = "r2_local_fs.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
